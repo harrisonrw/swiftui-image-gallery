@@ -8,26 +8,44 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let images = ["car", "bus", "tram", "cablecar", "truck.box", "sailboat", "ferry", "airplane", "bicycle", "scooter"]
+    @State private var isShowingSFSymbols = true
+
+    private let sfSymbols = ["car", "bus", "tram", "cablecar", "truck.box", "sailboat", "ferry", "airplane", "bicycle", "scooter"]
 
     private let cellSize: CGFloat = 100
 
     var body: some View {
-        VStack(alignment: .leading) {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: cellSize, maximum: .infinity), spacing: 2)], spacing: 2) {
-                   ForEach(images, id: \.self) { image in
-                       Image(systemName: image)
-                           .font(.system(size: 48))
-                           .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                           .aspectRatio(1, contentMode: .fit)
-                           .background(Color.indigo)
-                           .foregroundStyle(.white)
+        NavigationStack {
+            VStack(alignment: .leading) {
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: cellSize, maximum: .infinity), spacing: 2)], spacing: 2) {
+                        if isShowingSFSymbols {
+                            ForEach(sfSymbols, id: \.self) { symbol in
+                                Image(systemName: symbol)
+                                    .font(.system(size: 48))
+                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                                    .aspectRatio(1, contentMode: .fit)
+                                    .background(Color.indigo)
+                                    .foregroundStyle(.white)
+                            }
+                        } else {
+                            // TODO: show photos
+                        }
                    }
                }
-           }
+            }
+            .navigationTitle("Image Gallery")
+
+            .toolbar {
+                Button {
+                    isShowingSFSymbols.toggle()
+                } label: {
+                    Image(systemName: "arrow.triangle.2.circlepath.circle")
+                        .font(.system(size: 32))
+                        .foregroundStyle(.green)
+                }
+            }
         }
-        .padding()
     }
 }
 
