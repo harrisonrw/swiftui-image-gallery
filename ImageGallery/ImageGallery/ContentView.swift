@@ -12,6 +12,8 @@ struct ContentView: View {
 
     private let sfSymbols = ["car", "bus", "tram", "cablecar", "truck.box", "sailboat", "ferry", "airplane", "bicycle", "scooter"]
 
+    private let photos = ["photo1", "photo2", "photo3", "photo4", "photo5", "photo6", "photo7", "photo8", "photo9", "photo10"]
+
     private let cellSize: CGFloat = 100
 
     var body: some View {
@@ -29,7 +31,14 @@ struct ContentView: View {
                                     .foregroundStyle(.white)
                             }
                         } else {
-                            // TODO: show photos
+                            ForEach(photos, id: \.self) { photo in
+                                Image(photo)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                                    .clipped()
+                                    .aspectRatio(1, contentMode: .fit)
+                            }
                         }
                    }
                }
